@@ -1,0 +1,26 @@
+<OGRVRTDataSource>
+	<OGRVRTLayer name="siose_t_poligonos_input">
+		<SrcDataSource>F:/2023_IGN_SIOSE/01_Data/SAR_02_ALBACETE/02_ALBACETE.gpkg</SrcDataSource>
+		<SrcLayer>SAR_02_T_POLIGONOS</SrcLayer>
+	</OGRVRTLayer>
+	<OGRVRTLayer name="siose_t_valores_input">
+		<SrcDataSource>F:/2023_IGN_SIOSE/01_Data/SAR_02_ALBACETE/02_ALBACETE.gpkg</SrcDataSource>
+		<SrcLayer>SAR_02_T_VALORES</SrcLayer>
+	</OGRVRTLayer>
+	<OGRVRTLayer name="siose_t_usos_input">
+		<SrcDataSource>F:/2023_IGN_SIOSE/01_Data/SAR_02_ALBACETE/02_ALBACETE.gpkg</SrcDataSource>
+		<SrcLayer>SAR_02_T_USOS</SrcLayer>
+	</OGRVRTLayer>
+	<OGRVRTLayer name="siose_t_combinada_input">
+		<SrcDataSource>F:/2023_IGN_SIOSE/01_Data/SAR_02_ALBACETE/02_ALBACETE.gpkg</SrcDataSource>
+		<SrcLayer>SAR_02_T_COMBINADA</SrcLayer>
+	</OGRVRTLayer>
+	<OGRVRTLayer name="siose_tabla_plana_input">
+		<SrcDataSource>F:/2023_IGN_SIOSE/01_Data/SAR_02_ALBACETE/02_ALBACETE.gpkg</SrcDataSource>
+		<SrcLayer>SAR_02_TABLA_PLANA</SrcLayer>
+	</OGRVRTLayer>
+	<OGRVRTLayer name="siose_t_poligonos_output">
+		<SrcDataSource>f:\2023_ign_siose\01_data\sar_02_albacete\02_albacete_ferez.gpkg</SrcDataSource>
+		<SrcLayer>SAR_T_POLIGONOS</SrcLayer>
+	</OGRVRTLayer>
+</OGRVRTDataSource>
