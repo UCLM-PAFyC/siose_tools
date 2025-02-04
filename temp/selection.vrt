@@ -20,7 +20,7 @@
 		<SrcLayer>SAR_02_TABLA_PLANA</SrcLayer>
 	</OGRVRTLayer>
 	<OGRVRTLayer name="siose_t_poligonos_output">
-		<SrcDataSource>f:\2023_ign_siose\01_data\sar_02_albacete\02_albacete_ferez.gpkg</SrcDataSource>
+		<SrcDataSource>f:\2023_ign_siose\01_data\sar_02_albacete\02_albacete_abengibre.gpkg</SrcDataSource>
 		<SrcLayer>SAR_T_POLIGONOS</SrcLayer>
 	</OGRVRTLayer>
 </OGRVRTDataSource>

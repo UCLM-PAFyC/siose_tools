@@ -21,6 +21,13 @@
  *                                                                         *
  ***************************************************************************/
 """
+CONST_GDAL_TOOL_OGR2OGR = 'ogr2ogr'
+CONST_GDAL_TOOL_OGR2OGR_EXT = 'ogr2ogr.exe'
+CONST_GDAL_TOOL_OGRINFO = 'ogrinfo'
+CONST_GDAL_TOOL_OGRINFO_EXT = 'ogrinfo.exe'
+CONST_GDAL_TOOLS_WINDOWS_BIN_BASE = 'bin'
+CONST_GDAL_TOOLS_PATH = ''#'C:\\Program Files\\QGIS 3.34.15\\bin'
+
 CONST_TEMPLATES_PATH = 'templates'
 CONST_SIOSE_TEMPLATE = 'SIOSE.gpkg'
 CONST_SIOSE_HR_TEMPLATE = 'SIOSEAR.gpkg'

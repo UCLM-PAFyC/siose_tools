@@ -36,17 +36,98 @@ from datetime import datetime
 from . import siose_tools_definitions as SDefs
 import math
 from pathlib import PureWindowsPath
-qgis_prefix_path = QgsApplication.prefixPath()
-qgis_path = PureWindowsPath(qgis_prefix_path)
-qgis_install_path = qgis_path.parents[1]
-gdal_utils_path = os.path.join(qgis_install_path, 'bin')
-# ogr2ogr_with_path = os.path.join(ogr2ogr_with_path, 'ogr2ogr')
-gdal_utils_path = os.path.normcase(gdal_utils_path)
-ogr2ogr_with_path = os.path.join(gdal_utils_path, 'ogr2ogr')
-ogr2ogr_with_path = os.path.normcase(ogr2ogr_with_path)
-ogrinfo_with_path = os.path.join(gdal_utils_path, 'ogrinfo')
-ogrinfo_with_path = os.path.normcase(ogrinfo_with_path)
-# sys.path.append(gdal_utils_path)
+
+ogr2ogr_with_path = ''
+ogrinfo_with_path = ''
+if os.name == 'nt':
+    qgis_prefix_path = QgsApplication.prefixPath()
+    qgis_path = PureWindowsPath(qgis_prefix_path)
+    qgis_install_path = qgis_path.parents[1]
+    gdal_utils_path = os.path.join(qgis_install_path, SDefs.CONST_GDAL_TOOLS_WINDOWS_BIN_BASE)
+    # ogr2ogr_with_path = os.path.join(ogr2ogr_with_path, 'ogr2ogr')
+    gdal_utils_path = os.path.normcase(gdal_utils_path)
+    ogr2ogr_with_path = os.path.join(gdal_utils_path, SDefs.CONST_GDAL_TOOL_OGR2OGR)
+    ogr2ogr_with_path = os.path.normcase(ogr2ogr_with_path)
+    ogr2ogr_with_path_ext = os.path.join(gdal_utils_path, SDefs.CONST_GDAL_TOOL_OGR2OGR_EXT)
+    ogr2ogr_with_path_ext = os.path.normcase(ogr2ogr_with_path_ext)
+    ogrinfo_with_path = os.path.join(gdal_utils_path, SDefs.CONST_GDAL_TOOL_OGRINFO)
+    ogrinfo_with_path = os.path.normcase(ogrinfo_with_path)
+    ogrinfo_with_path_ext = os.path.join(gdal_utils_path, SDefs.CONST_GDAL_TOOL_OGRINFO_EXT)
+    ogrinfo_with_path_ext = os.path.normcase(ogrinfo_with_path_ext)
+    # sys.path.append(gdal_utils_path)
+    if not os.path.exists(ogr2ogr_with_path_ext):
+        ogr2ogr_with_path_from_gtp = os.path.join(SDefs.CONST_GDAL_TOOLS_PATH, SDefs.CONST_GDAL_TOOL_OGR2OGR)
+        ogr2ogr_with_path_from_gtp = os.path.normcase(ogr2ogr_with_path_from_gtp)
+        ogr2ogr_with_path_from_gtp_ext = os.path.join(SDefs.CONST_GDAL_TOOLS_PATH, SDefs.CONST_GDAL_TOOL_OGR2OGR_EXT)
+        ogr2ogr_with_path_from_gtp_ext = os.path.normcase(ogr2ogr_with_path_from_gtp_ext)
+        if os.path.exists(ogr2ogr_with_path_from_gtp_ext):
+            ogr2ogr_with_path_ext = ogr2ogr_with_path_from_gtp_ext
+            ogr2ogr_with_path = ogr2ogr_with_path_from_gtp
+            ogr2ogr_with_path = '\"' + ogr2ogr_with_path + '\"'
+            text = "GDAL Tool ogr2ogr change to:\n"
+            text += ogr2ogr_with_path
+            msgBox = QMessageBox()
+            msgBox.setIcon(QMessageBox.Information)
+            msgBox.setWindowTitle('SIOSE TOOLS: GDAL Tools')
+            msgBox.setText(text)
+            msgBox.exec_()
+        else:
+            text = "GDAL Tool ogr2ogr options not found:\n"
+            text += "Edit siose_tools_definitions.py file and\n"
+            text += "set path in line 29, like:\n"
+            text += "CONST_GDAL_TOOLS_PATH = 'C:\\Program Files\\QGIS 3.34.15\\bin'\n"
+            text += "Reload de plugin"
+            msgBox = QMessageBox()
+            msgBox.setIcon(QMessageBox.Information)
+            msgBox.setWindowTitle('SIOSE TOOLS: GDAL Tools')
+            msgBox.setText(text)
+            msgBox.exec_()
+    # else:
+    #     text = "GDAL Tool ogr2ogr:\n"
+    #     text += ogr2ogr_with_path
+    #     msgBox = QMessageBox()
+    #     msgBox.setIcon(QMessageBox.Information)
+    #     msgBox.setWindowTitle('SIOSE TOOLS: GDAL Tools')
+    #     msgBox.setText(text)
+    #     msgBox.exec_()
+    if not os.path.exists(ogrinfo_with_path_ext):
+        ogrinfo_with_path_from_gtp = os.path.join(SDefs.CONST_GDAL_TOOLS_PATH, SDefs.CONST_GDAL_TOOL_OGRINFO)
+        ogrinfo_with_path_from_gtp = os.path.normcase(ogrinfo_with_path_from_gtp)
+        ogrinfo_with_path_from_gtp_ext = os.path.join(SDefs.CONST_GDAL_TOOLS_PATH, SDefs.CONST_GDAL_TOOL_OGRINFO_EXT)
+        ogrinfo_with_path_from_gtp_ext = os.path.normcase(ogrinfo_with_path_from_gtp_ext)
+        if os.path.exists(ogrinfo_with_path_from_gtp_ext):
+            ogrinfo_with_path_ext = ogrinfo_with_path_from_gtp_ext
+            ogrinfo_with_path = ogrinfo_with_path_from_gtp
+            ogrinfo_with_path = '\"' + ogrinfo_with_path + '\"'
+            text = "GDAL Tool ogrinfo change to:\n"
+            text += ogrinfo_with_path
+            msgBox = QMessageBox()
+            msgBox.setIcon(QMessageBox.Information)
+            msgBox.setWindowTitle('SIOSE TOOLS: GDAL Tools')
+            msgBox.setText(text)
+            msgBox.exec_()
+        else:
+            text = "GDAL Tool ogrinfo options not found:\n"
+            text += "Edit siose_tools_definitions.py file and\n"
+            text += "set path in line 29, like:\n"
+            text += "CONST_GDAL_TOOLS_PATH = 'C:\\Program Files\\QGIS 3.34.15\\bin'\n"
+            text += "Reload de plugin"
+            msgBox = QMessageBox()
+            msgBox.setIcon(QMessageBox.Information)
+            msgBox.setWindowTitle('SIOSE TOOLS: GDAL Tools')
+            msgBox.setText(text)
+            msgBox.exec_()
+    # else:
+    #     text = "GDAL Tool ogrinfo:\n"
+    #     text += ogrinfo_with_path
+    #     msgBox = QMessageBox()
+    #     msgBox.setIcon(QMessageBox.Information)
+    #     msgBox.setWindowTitle('SIOSE TOOLS: GDAL Tools')
+    #     msgBox.setText(text)
+    #     msgBox.exec_()
+else:
+    ogr2ogr_with_path = SDefs.CONST_GDAL_TOOL_OGR2OGR
+    ogrinfo_with_path = SDefs.CONST_GDAL_TOOL_OGRINFO
 
 # sys.path.append("C:\Program Files\JetBrains\PyCharm 2023.2\debug-eggs\pydevd-pycharm.egg") # dhl
 # import pydevd
@@ -460,6 +541,13 @@ class ClipSioseDialog(QDialog, FORM_CLASS):
         Brief:
         """
         super(ClipSioseDialog, self).__init__(parent)
+        if not siose_hr_selected:
+            if from_map_canvas:
+                title = SDefs.CONST_CLIP_SIOSE_FROM_MAP_CANVAS_TEXT
+            else:
+                title = SDefs.CONST_CLIP_SIOSE_FROM_SELECTED_FEATURES_TEXT
+        else:
+            title = SDefs.CONST_CLIP_SIOSE_HR_FROM_ADMINISTRATIVE_UNIT_TEXT
         self.setupUi(self)
         self.iface = iface
         self.gdal_error_handler = gdal_error_handler
@@ -475,12 +563,7 @@ class ClipSioseDialog(QDialog, FORM_CLASS):
         self.fieldNameComboBox.setVisible(False)
         self.fieldValueLabel.setVisible(False)
         self.fieldValueComboBox.setVisible(False)
-        if not siose_hr_selected:
-            if from_map_canvas:
-                title = SDefs.CONST_CLIP_SIOSE_FROM_MAP_CANVAS_TEXT
-            else:
-                title = SDefs.CONST_CLIP_SIOSE_FROM_SELECTED_FEATURES_TEXT
-        else:
+        if siose_hr_selected:
             title = SDefs.CONST_CLIP_SIOSE_HR_FROM_ADMINISTRATIVE_UNIT_TEXT
             self.fieldNameLabel.setVisible(True)
             self.fieldNameComboBox.setVisible(True)
